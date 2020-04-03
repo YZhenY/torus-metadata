@@ -1,0 +1,102 @@
+# github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+github.com/alecthomas/template
+github.com/alecthomas/template/parse
+# github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4
+github.com/alecthomas/units
+# github.com/btcsuite/btcd v0.20.1-beta
+github.com/btcsuite/btcd/btcec
+# github.com/caarlos0/env v3.5.0+incompatible
+github.com/caarlos0/env
+# github.com/ethereum/go-ethereum v1.8.20
+github.com/ethereum/go-ethereum/common
+github.com/ethereum/go-ethereum/common/hexutil
+github.com/ethereum/go-ethereum/common/math
+github.com/ethereum/go-ethereum/crypto
+github.com/ethereum/go-ethereum/crypto/secp256k1
+github.com/ethereum/go-ethereum/crypto/sha3
+github.com/ethereum/go-ethereum/rlp
+# github.com/gogo/protobuf v1.2.1
+github.com/gogo/protobuf/proto
+# github.com/ipfs/go-ipfs-api v0.0.3
+github.com/ipfs/go-ipfs-api
+github.com/ipfs/go-ipfs-api/options
+# github.com/ipfs/go-ipfs-files v0.0.6
+github.com/ipfs/go-ipfs-files
+# github.com/jinzhu/gorm v1.9.12
+github.com/jinzhu/gorm
+github.com/jinzhu/gorm/dialects/postgres
+# github.com/jinzhu/inflection v1.0.0
+github.com/jinzhu/inflection
+# github.com/konsorten/go-windows-terminal-sequences v1.0.1
+github.com/konsorten/go-windows-terminal-sequences
+# github.com/lib/pq v1.1.1
+github.com/lib/pq
+github.com/lib/pq/hstore
+github.com/lib/pq/oid
+github.com/lib/pq/scram
+# github.com/libp2p/go-flow-metrics v0.0.1
+github.com/libp2p/go-flow-metrics
+# github.com/libp2p/go-libp2p-core v0.0.1
+github.com/libp2p/go-libp2p-core/crypto
+github.com/libp2p/go-libp2p-core/crypto/pb
+github.com/libp2p/go-libp2p-core/metrics
+github.com/libp2p/go-libp2p-core/peer
+github.com/libp2p/go-libp2p-core/protocol
+# github.com/libp2p/go-libp2p-crypto v0.1.0
+github.com/libp2p/go-libp2p-crypto
+# github.com/libp2p/go-libp2p-metrics v0.1.0
+github.com/libp2p/go-libp2p-metrics
+# github.com/libp2p/go-libp2p-peer v0.2.0
+github.com/libp2p/go-libp2p-peer
+# github.com/mattn/go-sqlite3 v2.0.3+incompatible
+github.com/mattn/go-sqlite3
+# github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1
+github.com/minio/blake2b-simd
+# github.com/minio/sha256-simd v0.1.1-0.20190913151208-6de447530771
+github.com/minio/sha256-simd
+# github.com/mitchellh/go-homedir v1.1.0
+github.com/mitchellh/go-homedir
+# github.com/mr-tron/base58 v1.1.2
+github.com/mr-tron/base58/base58
+# github.com/multiformats/go-multiaddr v0.2.0
+github.com/multiformats/go-multiaddr
+# github.com/multiformats/go-multiaddr-net v0.1.1
+github.com/multiformats/go-multiaddr-net
+# github.com/multiformats/go-multihash v0.0.8
+github.com/multiformats/go-multihash
+# github.com/multiformats/go-varint v0.0.1
+github.com/multiformats/go-varint
+# github.com/prometheus/common v0.7.0
+github.com/prometheus/common/log
+# github.com/rs/cors v1.7.0
+github.com/rs/cors
+# github.com/sirupsen/logrus v1.5.0
+github.com/sirupsen/logrus
+# github.com/spacemonkeygo/openssl v0.0.0-20181017203307-c2dcc5cca94a
+github.com/spacemonkeygo/openssl
+github.com/spacemonkeygo/openssl/utils
+# github.com/spacemonkeygo/spacelog v0.0.0-20180420211403-2296661a0572
+github.com/spacemonkeygo/spacelog
+# github.com/spaolacci/murmur3 v1.1.0
+github.com/spaolacci/murmur3
+# github.com/torusresearch/bijson v0.1.0
+github.com/torusresearch/bijson
+# github.com/torusresearch/torus-common v0.0.0-20200227070322-06f2b8d7874e
+github.com/torusresearch/torus-common/common
+github.com/torusresearch/torus-common/crypto
+github.com/torusresearch/torus-common/secp256k1
+# github.com/whyrusleeping/tar-utils v0.0.0-20180509141711-8c6c8ba81d5c
+github.com/whyrusleeping/tar-utils
+# golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
+golang.org/x/crypto/blake2s
+golang.org/x/crypto/ed25519
+golang.org/x/crypto/ed25519/internal/edwards25519
+golang.org/x/crypto/sha3
+# golang.org/x/sys v0.0.0-20191010194322-b09406accb47
+golang.org/x/sys/cpu
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+golang.org/x/sys/windows/registry
+golang.org/x/sys/windows/svc/eventlog
+# gopkg.in/alecthomas/kingpin.v2 v2.2.6
+gopkg.in/alecthomas/kingpin.v2
