@@ -9,6 +9,7 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/patrickmn/go-cache"
 	"github.com/torusresearch/torus-metadata/config"
 )
 
@@ -24,6 +25,7 @@ type (
 		sh      *shell.Shell
 		db      *gorm.DB
 		timeout time.Duration
+		cache   *cache.Cache
 		Debug   bool
 	}
 	// SetParams are the params needed for authorization.
@@ -71,6 +73,7 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 			cfg.PGPassword,
 		),
 	)
+	c := cache.New(10*time.Minute, 10*time.Minute)
 
 	if err != nil {
 		return nil, err
@@ -79,7 +82,7 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 	db.LogMode(true)
 	db.AutoMigrate(&Data{})
 
-	mr.Handle("/set", SetHandler{sh: sh, db: db, Debug: cfg.Debug, timeout: time.Minute})
+	mr.Handle("/set", SetHandler{sh: sh, db: db, Debug: cfg.Debug, timeout: time.Minute, cache: c})
 	mr.Handle("/get", GetHandler{db: db})
 	return mr, nil
 }

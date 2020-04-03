@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/hex"
 	"fmt"
 	"io/ioutil"
 	"math/big"
@@ -107,16 +108,24 @@ func (h SetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			Y: p.PubKeyY,
 		}
 
-		// TODO: cache seen signatures
-		timeSigned := time.Unix(p.SetData.Timestamp.Int64(), 0)
-		if timeSigned.Add(h.timeout).Before(time.Now()) {
-			http.Error(w, "timesigned is more than 60 seconds ago", http.StatusInternalServerError)
-			return
-		}
-
 		bytesToVerify, err := bijson.Marshal(p.SetData)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		hexBytesToVerify := hex.EncodeToString(bytesToVerify)
+
+		if _, found := h.cache.Get(hexBytesToVerify); found {
+			http.Error(w, "message already seen in cache", http.StatusInternalServerError)
+			return
+		}
+
+		h.cache.SetDefault(hexBytesToVerify, true)
+
+		timeSigned := time.Unix(p.SetData.Timestamp.Int64(), 0)
+		if timeSigned.Add(h.timeout).Before(time.Now()) {
+			http.Error(w, "timesigned is more than 60 seconds ago", http.StatusInternalServerError)
 			return
 		}
 
