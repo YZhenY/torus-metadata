@@ -17,6 +17,7 @@ torus-metadata
 
 # Private data
 data.sqlite
+certs/*
 server.crt
 server.key
 

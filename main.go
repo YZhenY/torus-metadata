@@ -39,8 +39,8 @@ func main() {
 		if err != nil {
 			log.WithError(err).Fatal()
 		}
-		certFile := fmt.Sprintf("%s/server.crt", path)
-		keyFile := fmt.Sprintf("%s/server.key", path)
+		certFile := fmt.Sprintf("%s/ssl/server.crt", path)
+		keyFile := fmt.Sprintf("%s/ssl/server.key", path)
 		if err := http.ListenAndServeTLS(listenString, certFile, keyFile, handler); err != nil {
 			log.WithError(err).Fatal()
 		}
