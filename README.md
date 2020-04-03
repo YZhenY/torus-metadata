@@ -1,4 +1,4 @@
-# Torus Recoverer
+# Torus Metadata
 
 ### Setting Data
 ```sh

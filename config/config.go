@@ -9,7 +9,7 @@ import (
 
 var Config = ConfigParams{}
 
-// Config parameters for torus recoverer.
+// Config parameters for torus metadata.
 type ConfigParams struct {
 	IPFSURL      string `env:"TM_IPFS_URL" envDefault:"localhost:5001"`
 	Port         string `env:"TM_PORT" envDefault:"5051"`

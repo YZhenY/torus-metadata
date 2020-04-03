@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  torus-recoverer:
+  torus-metadata:
     volumes:
       - ./:/app
     restart: always
