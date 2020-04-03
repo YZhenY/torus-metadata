@@ -3,7 +3,7 @@ version: '3'
 services:
   torus-metadata:
     volumes:
-      - ./certs:/app/certs
+      - ./ssl:/app/ssl
     restart: always
     build:
       context: .
