@@ -11,15 +11,15 @@ var Config = ConfigParams{}
 
 // Config parameters for torus recoverer.
 type ConfigParams struct {
-	IPFSURL      string `env:"TR_IPFS_URL" envDefault:"localhost:5001"`
-	Port         string `env:"TR_PORT" envDefault:"5051"`
-	PGHost       string `env:"TR_PG_HOST"`
-	PGPort       string `env:"TR_PG_PORT"`
-	PGUser       string `env:"TR_PG_USER"`
-	PGDBName     string `env:"TR_PG_DBNAME"`
-	PGPassword   string `env:"TR_PG_PASSWORD"`
-	Debug        bool   `env:"TR_DEBUG"`
-	HTTPSEnabled bool   `env:"TR_HTTPS_ENABLED"`
+	IPFSURL      string `env:"TM_IPFS_URL" envDefault:"localhost:5001"`
+	Port         string `env:"TM_PORT" envDefault:"5051"`
+	PGHost       string `env:"TM_PG_HOST"`
+	PGPort       string `env:"TM_PG_PORT"`
+	PGUser       string `env:"TM_PG_USER"`
+	PGDBName     string `env:"TM_PG_DBNAME"`
+	PGPassword   string `env:"TM_PG_PASSWORD"`
+	Debug        bool   `env:"TM_DEBUG"`
+	HTTPSEnabled bool   `env:"TM_HTTPS_ENABLED"`
 }
 
 func init() {
