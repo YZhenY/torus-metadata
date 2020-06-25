@@ -17,9 +17,10 @@ func init() {
 
 func main() {
 	log.WithFields(log.Fields{
-		"Port":  config.Config.Port,
-		"Debug": config.Config.Debug,
-		"HTTPS": config.Config.HTTPSEnabled,
+		"Version": "1.1",
+		"Port":    config.Config.Port,
+		"Debug":   config.Config.Debug,
+		"HTTPS":   config.Config.HTTPSEnabled,
 	}).Info("config")
 
 	mr, err := SetupHTTPHandler(config.Config)
