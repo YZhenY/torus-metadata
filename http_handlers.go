@@ -10,6 +10,9 @@ import (
 	"strings"
 	"time"
 
+	log "github.com/sirupsen/logrus"
+
+	shell "github.com/ipfs/go-ipfs-api"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/torusresearch/bijson"
 	"github.com/torusresearch/torus-common/common"
@@ -139,11 +142,19 @@ func (h SetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Key:   p.PubKeyX.Text(16) + "\x1c" + p.PubKeyY.Text(16),
 		Value: p.SetData.Data,
 	}
-
-	cid, err := h.sh.Add(strings.NewReader(p.SetData.Data))
+	// get hash only
+	cid, err := h.sh.Add(strings.NewReader(p.SetData.Data), shell.OnlyHash(true))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
+	// upload to ipfs in parallel
+	go func(data string) {
+		_, err := h.sh.Add(strings.NewReader(data))
+		if err != nil {
+			log.WithField("data", data).Error("could not ipfs add")
+		}
+	}(p.SetData.Data)
 
 	h.db.Where(Data{Key: data.Key}).Assign(Data{Value: data.Value}).FirstOrCreate(&data)
 	w.Header().Set("Content-Type", "application/json")
