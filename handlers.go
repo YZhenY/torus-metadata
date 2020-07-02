@@ -57,6 +57,10 @@ type (
 	GetResult struct {
 		Message string `json:"message"`
 	}
+
+	// Health endpoint
+	HealthHandler struct {
+	}
 )
 
 // SetupHTTPHandler registers the set and get handlers.
@@ -84,5 +88,6 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 
 	mr.Handle("/set", SetHandler{sh: sh, db: db, Debug: cfg.Debug, timeout: time.Minute, cache: c})
 	mr.Handle("/get", GetHandler{db: db})
+	mr.Handle("/health", HealthHandler{})
 	return mr, nil
 }
