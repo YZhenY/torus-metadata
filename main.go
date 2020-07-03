@@ -28,7 +28,7 @@ func main() {
 		log.WithError(err).Fatal("could not start app")
 	}
 
-	handler := cors.New(cors.Options{MaxAge: 600, AllowedHeaders: []string{"Origin", "Accept", "Content-Type", "X-Requested-With", "x-api-key"}}).Handler(mr)
+	handler := cors.New(cors.Options{MaxAge: 600, AllowedHeaders: []string{"Origin", "Accept", "Content-Type", "X-Requested-With", "x-api-key", "Authorization"}}).Handler(mr)
 	listenString := fmt.Sprintf(":%s", config.Config.Port)
 
 	if !config.Config.HTTPSEnabled {
