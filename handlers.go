@@ -70,21 +70,21 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 	dbRead, err := gorm.Open("mysql",
 		fmt.Sprintf(
 			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-			cfg.PGUser,
-			cfg.PGPassword,
+			cfg.MySQLUser,
+			cfg.MySQLPassword,
 			cfg.MySQLHostRead,
-			cfg.PGPort,
-			cfg.PGDBName,
+			cfg.MySQLPort,
+			cfg.MySQLDBName,
 		),
 	)
 	dbWrite, err := gorm.Open("mysql",
 		fmt.Sprintf(
 			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-			cfg.PGUser,
-			cfg.PGPassword,
+			cfg.MySQLUser,
+			cfg.MySQLPassword,
 			cfg.MySQLHostRead,
-			cfg.PGPort,
-			cfg.PGDBName,
+			cfg.MySQLPort,
+			cfg.MySQLDBName,
 		),
 	)
 	c := cache.New(10*time.Minute, 10*time.Minute)
