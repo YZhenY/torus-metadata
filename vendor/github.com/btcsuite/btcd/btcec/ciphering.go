@@ -13,6 +13,7 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"errors"
+	"fmt"
 	"io"
 )
 
@@ -173,11 +174,12 @@ func Decrypt(priv *PrivateKey, in []byte) ([]byte, error) {
 	derivedKey := sha512.Sum512(ecdhKey)
 	keyE := derivedKey[:32]
 	keyM := derivedKey[32:]
-
+	fmt.Println("dta", in[:len(in)-sha256.Size])
 	// verify mac
 	hm := hmac.New(sha256.New, keyM)
 	hm.Write(in[:len(in)-sha256.Size]) // everything is hashed
 	expectedMAC := hm.Sum(nil)
+	fmt.Println(messageMAC, expectedMAC, "hmac")
 	if !hmac.Equal(messageMAC, expectedMAC) {
 		return nil, ErrInvalidMAC
 	}

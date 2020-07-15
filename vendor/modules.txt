@@ -15,6 +15,8 @@ github.com/ethereum/go-ethereum/crypto
 github.com/ethereum/go-ethereum/crypto/secp256k1
 github.com/ethereum/go-ethereum/crypto/sha3
 github.com/ethereum/go-ethereum/rlp
+# github.com/go-sql-driver/mysql v1.4.1
+github.com/go-sql-driver/mysql
 # github.com/gogo/protobuf v1.2.1
 github.com/gogo/protobuf/proto
 # github.com/ipfs/go-ipfs-api v0.0.3
@@ -24,16 +26,11 @@ github.com/ipfs/go-ipfs-api/options
 github.com/ipfs/go-ipfs-files
 # github.com/jinzhu/gorm v1.9.12
 github.com/jinzhu/gorm
-github.com/jinzhu/gorm/dialects/postgres
+github.com/jinzhu/gorm/dialects/mysql
 # github.com/jinzhu/inflection v1.0.0
 github.com/jinzhu/inflection
 # github.com/konsorten/go-windows-terminal-sequences v1.0.1
 github.com/konsorten/go-windows-terminal-sequences
-# github.com/lib/pq v1.1.1
-github.com/lib/pq
-github.com/lib/pq/hstore
-github.com/lib/pq/oid
-github.com/lib/pq/scram
 # github.com/libp2p/go-flow-metrics v0.0.1
 github.com/libp2p/go-flow-metrics
 # github.com/libp2p/go-libp2p-core v0.0.1
@@ -100,5 +97,7 @@ golang.org/x/sys/unix
 golang.org/x/sys/windows
 golang.org/x/sys/windows/registry
 golang.org/x/sys/windows/svc/eventlog
+# google.golang.org/appengine v1.4.0
+google.golang.org/appengine/cloudsql
 # gopkg.in/alecthomas/kingpin.v2 v2.2.6
 gopkg.in/alecthomas/kingpin.v2

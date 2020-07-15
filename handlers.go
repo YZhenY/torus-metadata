@@ -8,7 +8,7 @@ import (
 
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/patrickmn/go-cache"
 	"github.com/torusresearch/torus-metadata/config"
 )
@@ -67,10 +67,20 @@ type (
 func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 	mr := http.NewServeMux()
 	sh := shell.NewShell(cfg.IPFSURL)
-	db, err := gorm.Open("postgres",
+	dbRead, err := gorm.Open("mysql",
 		fmt.Sprintf(
 			"host='%s' port=%s user=%s dbname=%s password=%s",
-			cfg.PGHost,
+			cfg.MySQLHostRead,
+			cfg.PGPort,
+			cfg.PGUser,
+			cfg.PGDBName,
+			cfg.PGPassword,
+		),
+	)
+	dbWrite, err := gorm.Open("mysql",
+		fmt.Sprintf(
+			"host='%s' port=%s user=%s dbname=%s password=%s",
+			cfg.MySQLHostWrite,
 			cfg.PGPort,
 			cfg.PGUser,
 			cfg.PGDBName,
@@ -83,11 +93,12 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 		return nil, err
 	}
 
-	db.LogMode(true)
-	db.AutoMigrate(&Data{})
+	dbRead.LogMode(true)
+	dbWrite.LogMode(true)
+	dbWrite.AutoMigrate(&Data{})
 
-	mr.Handle("/set", SetHandler{sh: sh, db: db, Debug: cfg.Debug, timeout: time.Minute, cache: c})
-	mr.Handle("/get", GetHandler{db: db})
+	mr.Handle("/set", SetHandler{sh: sh, db: dbWrite, Debug: cfg.Debug, timeout: time.Minute, cache: c})
+	mr.Handle("/get", GetHandler{db: dbRead})
 	mr.Handle("/health", HealthHandler{})
 	return mr, nil
 }
