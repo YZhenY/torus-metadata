@@ -21,6 +21,7 @@ func main() {
 		"Port":    config.Config.Port,
 		"Debug":   config.Config.Debug,
 		"HTTPS":   config.Config.HTTPSEnabled,
+		"DB":      config.Config.MySQLHostWrite,
 	}).Info("config")
 
 	mr, err := SetupHTTPHandler(config.Config)

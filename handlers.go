@@ -8,7 +8,7 @@ import (
 
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/patrickmn/go-cache"
 	"github.com/torusresearch/torus-metadata/config"
 )
@@ -30,6 +30,7 @@ type (
 	}
 	// SetParams are the params needed for authorization.
 	SetParams struct {
+		Namespace string  `json:"namespace"`
 		PubKeyX   big.Int `json:"pub_key_X"`
 		PubKeyY   big.Int `json:"pub_key_Y"`
 		SetData   SetData `json:"set_data"`
@@ -50,8 +51,9 @@ type (
 	}
 	// SetParams are the params needed for authorization.
 	GetParams struct {
-		PubKeyX big.Int `json:"pub_key_X"`
-		PubKeyY big.Int `json:"pub_key_Y"`
+		Namespace string  `json:"namespace"`
+		PubKeyX   big.Int `json:"pub_key_X"`
+		PubKeyY   big.Int `json:"pub_key_Y"`
 	}
 	// SetResult is the response of an authorization.
 	GetResult struct {
@@ -67,14 +69,24 @@ type (
 func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 	mr := http.NewServeMux()
 	sh := shell.NewShell(cfg.IPFSURL)
-	db, err := gorm.Open("postgres",
+	dbRead, err := gorm.Open("mysql",
 		fmt.Sprintf(
-			"host='%s' port=%s user=%s dbname=%s password=%s",
-			cfg.PGHost,
-			cfg.PGPort,
-			cfg.PGUser,
-			cfg.PGDBName,
-			cfg.PGPassword,
+			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			cfg.MySQLUser,
+			cfg.MySQLPassword,
+			cfg.MySQLHostRead,
+			cfg.MySQLPort,
+			cfg.MySQLDBName,
+		),
+	)
+	dbWrite, err := gorm.Open("mysql",
+		fmt.Sprintf(
+			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			cfg.MySQLUser,
+			cfg.MySQLPassword,
+			cfg.MySQLHostRead,
+			cfg.MySQLPort,
+			cfg.MySQLDBName,
 		),
 	)
 	c := cache.New(10*time.Minute, 10*time.Minute)
@@ -83,11 +95,12 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 		return nil, err
 	}
 
-	db.LogMode(true)
-	db.AutoMigrate(&Data{})
+	dbRead.LogMode(true)
+	dbWrite.LogMode(true)
+	dbWrite.AutoMigrate(&Data{})
 
-	mr.Handle("/set", SetHandler{sh: sh, db: db, Debug: cfg.Debug, timeout: time.Minute, cache: c})
-	mr.Handle("/get", GetHandler{db: db})
+	mr.Handle("/set", SetHandler{sh: sh, db: dbWrite, Debug: cfg.Debug, timeout: time.Minute, cache: c})
+	mr.Handle("/get", GetHandler{db: dbRead})
 	mr.Handle("/health", HealthHandler{})
 	return mr, nil
 }

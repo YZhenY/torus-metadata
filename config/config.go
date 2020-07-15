@@ -11,15 +11,16 @@ var Config = ConfigParams{}
 
 // Config parameters for torus metadata.
 type ConfigParams struct {
-	IPFSURL      string `env:"TM_IPFS_URL" envDefault:"localhost:5001"`
-	Port         string `env:"TM_PORT" envDefault:"5051"`
-	PGHost       string `env:"TM_PG_HOST"`
-	PGPort       string `env:"TM_PG_PORT"`
-	PGUser       string `env:"TM_PG_USER"`
-	PGDBName     string `env:"TM_PG_DBNAME"`
-	PGPassword   string `env:"TM_PG_PASSWORD"`
-	Debug        bool   `env:"TM_DEBUG"`
-	HTTPSEnabled bool   `env:"TM_HTTPS_ENABLED"`
+	IPFSURL        string `env:"TM_IPFS_URL" envDefault:"localhost:5001"`
+	Port           string `env:"TM_PORT" envDefault:"5051"`
+	MySQLHostRead  string `env:"TM_MYSQL_HOST_READ"`
+	MySQLHostWrite string `env:"TM_MYSQL_HOST_WRITE"`
+	MySQLPort      string `env:"TM_MYSQL_PORT"`
+	MySQLUser      string `env:"TM_MYSQL_USER"`
+	MySQLDBName    string `env:"TM_MYSQL_DBNAME"`
+	MySQLPassword  string `env:"TM_MYSQL_PASSWORD"`
+	Debug          bool   `env:"TM_DEBUG"`
+	HTTPSEnabled   bool   `env:"TM_HTTPS_ENABLED"`
 }
 
 func init() {
