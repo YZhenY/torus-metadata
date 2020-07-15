@@ -139,8 +139,13 @@ func (h SetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	key := p.PubKeyX.Text(16) + "\x1c" + p.PubKeyY.Text(16)
+	if p.Namespace != "" {
+		key = key + "\x1c" + p.Namespace
+	}
+
 	data := Data{
-		Key:   p.PubKeyX.Text(16) + "\x1c" + p.PubKeyY.Text(16),
+		Key:   key,
 		Value: p.SetData.Data,
 	}
 	// get hash only
@@ -183,6 +188,9 @@ func (h GetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	key := p.PubKeyX.Text(16) + "\x1c" + p.PubKeyY.Text(16)
+	if p.Namespace != "" {
+		key = key + "\x1c" + p.Namespace
+	}
 	var value Data
 	h.db.Where(&Data{Key: key}).First(&value)
 	result, err := bijson.Marshal(GetResult{Message: value.Value})

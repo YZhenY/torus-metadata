@@ -30,6 +30,7 @@ type (
 	}
 	// SetParams are the params needed for authorization.
 	SetParams struct {
+		Namespace string  `json:"namespace"`
 		PubKeyX   big.Int `json:"pub_key_X"`
 		PubKeyY   big.Int `json:"pub_key_Y"`
 		SetData   SetData `json:"set_data"`
@@ -50,8 +51,9 @@ type (
 	}
 	// SetParams are the params needed for authorization.
 	GetParams struct {
-		PubKeyX big.Int `json:"pub_key_X"`
-		PubKeyY big.Int `json:"pub_key_Y"`
+		Namespace string  `json:"namespace"`
+		PubKeyX   big.Int `json:"pub_key_X"`
+		PubKeyY   big.Int `json:"pub_key_Y"`
 	}
 	// SetResult is the response of an authorization.
 	GetResult struct {
