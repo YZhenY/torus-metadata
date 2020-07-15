@@ -69,22 +69,22 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 	sh := shell.NewShell(cfg.IPFSURL)
 	dbRead, err := gorm.Open("mysql",
 		fmt.Sprintf(
-			"host='%s' port=%s user=%s dbname=%s password=%s",
+			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			cfg.PGUser,
+			cfg.PGPassword,
 			cfg.MySQLHostRead,
 			cfg.PGPort,
-			cfg.PGUser,
 			cfg.PGDBName,
-			cfg.PGPassword,
 		),
 	)
 	dbWrite, err := gorm.Open("mysql",
 		fmt.Sprintf(
-			"host='%s' port=%s user=%s dbname=%s password=%s",
-			cfg.MySQLHostWrite,
-			cfg.PGPort,
+			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 			cfg.PGUser,
-			cfg.PGDBName,
 			cfg.PGPassword,
+			cfg.MySQLHostRead,
+			cfg.PGPort,
+			cfg.PGDBName,
 		),
 	)
 	c := cache.New(10*time.Minute, 10*time.Minute)
