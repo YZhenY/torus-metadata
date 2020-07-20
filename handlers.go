@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math/big"
 	"net/http"
+	"strings"
 	"time"
 
 	shell "github.com/ipfs/go-ipfs-api"
@@ -84,11 +86,12 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 			"%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 			cfg.MySQLUser,
 			cfg.MySQLPassword,
-			cfg.MySQLHostRead,
+			cfg.MySQLHostWrite,
 			cfg.MySQLPort,
 			cfg.MySQLDBName,
 		),
 	)
+
 	c := cache.New(10*time.Minute, 10*time.Minute)
 
 	if err != nil {
@@ -98,6 +101,11 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 	dbRead.LogMode(true)
 	dbWrite.LogMode(true)
 	dbWrite.AutoMigrate(&Data{})
+
+	if !strings.Contains(cfg.MySQLHostWrite, "ap-southeast-1") {
+		log.Print("setting value")
+		dbWrite.Exec("SET aurora_replica_read_consistency='SESSION';")
+	}
 
 	mr.Handle("/set", SetHandler{sh: sh, db: dbWrite, Debug: cfg.Debug, timeout: time.Minute, cache: c})
 	mr.Handle("/get", GetHandler{db: dbRead})
