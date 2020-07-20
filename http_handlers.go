@@ -14,7 +14,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	shell "github.com/ipfs/go-ipfs-api"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/torusresearch/bijson"
 	"github.com/torusresearch/torus-common/common"
 	torusCrypto "github.com/torusresearch/torus-common/crypto"
