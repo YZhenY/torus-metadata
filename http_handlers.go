@@ -161,7 +161,11 @@ func (h SetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}(p.SetData.Data)
 
-	h.db.Where(Data{Key: data.Key}).Assign(Data{Value: data.Value}).FirstOrCreate(&data)
+	if err := h.db.Where(Data{Key: data.Key}).Assign(Data{Value: data.Value}).FirstOrCreate(&data).Error; err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	result, err := bijson.Marshal(SetResult{Message: cid})
 	if err != nil {
