@@ -19,7 +19,7 @@ type (
 	Data struct {
 		gorm.Model
 		Key   string `gorm:"unique;not null"`
-		Value string
+		Value string `gorm:"type:varchar(32767);"`
 	}
 
 	// SetHandler is a reference the database.
