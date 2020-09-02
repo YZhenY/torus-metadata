@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"math/big"
 	"net/http"
-	"strings"
 	"time"
 
 	shell "github.com/ipfs/go-ipfs-api"
@@ -28,7 +26,7 @@ type (
 		db      *gorm.DB
 		timeout time.Duration
 		cache   *cache.Cache
-		Debug   bool
+		cfg     config.ConfigParams
 	}
 	// SetParams are the params needed for authorization.
 	SetParams struct {
@@ -98,16 +96,9 @@ func SetupHTTPHandler(cfg config.ConfigParams) (*http.ServeMux, error) {
 		return nil, err
 	}
 
-	dbRead.LogMode(true)
-	dbWrite.LogMode(true)
 	dbWrite.AutoMigrate(&Data{})
 
-	if !strings.Contains(cfg.MySQLHostWrite, "ap-southeast-1") {
-		log.Print("setting value")
-		dbWrite.Exec("SET aurora_replica_read_consistency='SESSION';")
-	}
-
-	mr.Handle("/set", SetHandler{sh: sh, db: dbWrite, Debug: cfg.Debug, timeout: time.Minute, cache: c})
+	mr.Handle("/set", SetHandler{sh: sh, db: dbWrite, timeout: time.Minute, cache: c, cfg: cfg})
 	mr.Handle("/get", GetHandler{db: dbRead})
 	mr.Handle("/health", HealthHandler{})
 	return mr, nil
