@@ -104,7 +104,7 @@ func (h SetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !h.Debug {
+	if !h.cfg.Debug {
 
 		pubKey := common.Point{
 			X: p.PubKeyX,
@@ -160,6 +160,10 @@ func (h SetHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			log.WithField("data", data).Error("could not ipfs add")
 		}
 	}(p.SetData.Data)
+
+	if !strings.Contains(h.cfg.MySQLHostWrite, "ap-southeast-1") {
+		h.db.Exec("SET aurora_replica_read_consistency='SESSION';")
+	}
 
 	if err := h.db.Where(Data{Key: data.Key}).Assign(Data{Value: data.Value}).FirstOrCreate(&data).Error; err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
